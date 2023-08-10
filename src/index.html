@@ -9,13 +9,34 @@
 </head>
 
 <body class="bg-slate-300 h-screen flex flex-col justify-center items-center">
-    <form id="form-conversor" class="flex-col flex bg-white rounded p-5">
-        <h1 class="font-bold uppercase text-left mb-5">Conversor de REAL para BIT</h1>
-        <label for="bit" class="text-left mb-2">Insira o bit:</label>
-        <input type="number" name="bit" id="bit" class="bg-slate-300 rounded p-2 mb-5">
-        <button type="submit" class="bg-slate-300 hover:bg-slate-500 rounded hover:text-white">Converter</button>
-        <div id="resultado" class="m-auto pt-5"></div>
-    </form>
+    <div id="form-conversor" class="bg-white rounded p-5 justify-center">
+        <div class="flex flex-col">
+            <h1 class="font-bold uppercase text-center mb-5">Conversor de REAL para BIT</h1>
+        </div>
+        <div class="flex flex-row content-between items-center">
+            <div class="flex flex-col w-5/12 items-center">
+                <label for="real" class=" mb-2 p-2">REAL:</label>
+                <input type="number" name="real" id="real" class="bg-slate-300 rounded p-2 mb-5 w-5/6">
+            </div>
+            <button id="troca" class="w-2/12">
+                <img src="./img/arrow.svg" alt="">
+            </button>
+            <div class="flex flex-col items-center w-5/12">
+                <label for="bit" class="mb-2 p-2">BIT:</label>
+                <input type="number" name="bit" id="bit" class="bg-slate-300 rounded p-2 mb-5 w-5/6">
+
+            </div>
+        </div>
+        <div class="items-center flex flex-col pt-3">
+            <button id="converter" onclick="converter()"
+                class=" w-6/12 text-center bg-slate-300  hover:bg-slate-500 rounded hover:text-white">Converter</button>
+            <div id="resultado" class="m-auto pt-5"></div>
+        </div>
+
+
+
+    </div>
+
 
 
     <script src="script.js"></script>
