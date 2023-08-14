@@ -6,7 +6,7 @@ const converter = () => {
 
 function decimalForBit(valor) {
 
-  document.getElementById("bit").value = '' + parteInteiraParaBit(valor) + '.' + parteDecimalParaBit(valor)
+  document.getElementById("bit").value = '' + parteInteiraParaBit(valor) + parteDecimalParaBit(valor)
 
 }
 
@@ -42,6 +42,10 @@ function parteDecimalParaBit(valor){
 
   let parteInteira = Math.floor(numeroAbsoluto);
   let parteDecimal = numeroAbsoluto - parteInteira;
+
+  if (parteDecimal === 0) {
+    return  ''
+  }
   let parteBitDecimal = [];
 
 
@@ -57,7 +61,7 @@ function parteDecimalParaBit(valor){
     }
   }
 
-  return parteBitDecimal.reverse().join('')
+  return '.' + parteBitDecimal.reverse().join('')
 
 }
 
