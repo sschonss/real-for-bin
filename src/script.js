@@ -1,30 +1,66 @@
 
 const converter = () => {
-  let bit = document.getElementById('real').value;
+  let bit = +document.getElementById('real').value;
   decimalForBit(bit);
 }
 
 function decimalForBit(valor) {
 
-  let arrayBit = [];
+  document.getElementById("bit").value = '' + parteInteiraParaBit(valor) + '.' + parteDecimalParaBit(valor)
+
+}
+
+function parteInteiraParaBit(valor){
+  let numeroAbsoluto = Math.abs(valor);
+
+  let parteInteira = Math.floor(numeroAbsoluto);
+  let parteBitInteira = [];
+
+
   let isdivisible = true;
 
-  if (valor == 1 || valor == 0) {
+  if (parteInteira == 1 || parteInteira == 0) {
     document.getElementById("bit").value = 1;
     return
   }
 
 
   do {
-    arrayBit.push(valor % 2);
-    valor = Math.trunc(valor / 2);
-    if (valor / 2 === undefined || valor / 2 === 0.5) {
-      arrayBit.push(valor)
+    parteBitInteira.push(parteInteira % 2);
+    parteInteira = Math.trunc(parteInteira / 2);
+    if (parteInteira  === 0 || parteInteira / 2 === 0.5) {
+      parteBitInteira.push(parteInteira)
       isdivisible = false
     }
   } while (isdivisible === true)
-  document.getElementById("bit").value = '' + arrayBit.reverse().join('')
+
+  return parteBitInteira.reverse().join('')
 }
+
+function parteDecimalParaBit(valor){
+  let numeroAbsoluto = Math.abs(valor);
+
+  let parteInteira = Math.floor(numeroAbsoluto);
+  let parteDecimal = numeroAbsoluto - parteInteira;
+  let parteBitDecimal = [];
+
+
+  let maxBits = 32;
+
+  while (parteDecimal !== 0 && parteBitDecimal.length < maxBits) {
+    parteDecimal *= 2;
+    if (parteDecimal >= 1) {
+      parteBitDecimal.push(1);
+      parteDecimal -= 1;
+    } else {
+      parteBitDecimal.push(0);
+    }
+  }
+
+  return parteBitDecimal.reverse().join('')
+
+}
+
 
 function bitForDecimal(valor) {
   let arrayBit = [];
