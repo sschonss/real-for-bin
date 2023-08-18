@@ -5,12 +5,17 @@ const converter = () => {
 }
 
 function decimalForBit(valor) {
+  if (valor < 0) {
+    document.getElementById("bit").innerHTML = '' + parteInteiraParaBit(valor) + parteDecimalParaBit(valor)
+  }
+  else {
+    document.getElementById("bit").innerHTML = '' + parteNaturalParaBit(valor) + parteDecimalParaBit(valor)
+  }
 
-  document.getElementById("bit").value = '' + parteInteiraParaBit(valor) + parteDecimalParaBit(valor)
 
 }
 
-function parteInteiraParaBit(valor){
+function parteNaturalParaBit(valor) {
   let numeroAbsoluto = Math.abs(valor);
 
   let parteInteira = Math.floor(numeroAbsoluto);
@@ -20,31 +25,40 @@ function parteInteiraParaBit(valor){
   let isdivisible = true;
 
   if (parteInteira == 1 || parteInteira == 0) {
-    document.getElementById("bit").value = 1;
-    return
+    parteBitInteira.push(parteInteira)
+    while (parteBitInteira.length < 32) {
+      parteBitInteira.push(0);
+
+    }
+    return parteBitInteira.reverse().join('')
   }
 
 
   do {
     parteBitInteira.push(parteInteira % 2);
     parteInteira = Math.trunc(parteInteira / 2);
-    if (parteInteira  === 0 || parteInteira / 2 === 0.5) {
+    if (parteInteira === 0 || parteInteira / 2 === 0.5) {
       parteBitInteira.push(parteInteira)
       isdivisible = false
     }
   } while (isdivisible === true)
 
+  while (parteBitInteira.length < 32) {
+    parteBitInteira.push(0);
+
+  }
+
   return parteBitInteira.reverse().join('')
 }
 
-function parteDecimalParaBit(valor){
+function parteDecimalParaBit(valor) {
   let numeroAbsoluto = Math.abs(valor);
 
   let parteInteira = Math.floor(numeroAbsoluto);
   let parteDecimal = numeroAbsoluto - parteInteira;
 
   if (parteDecimal === 0) {
-    return  ''
+    return ''
   }
   let parteBitDecimal = [];
 
@@ -60,6 +74,8 @@ function parteDecimalParaBit(valor){
       parteBitDecimal.push(0);
     }
   }
+
+
 
   return '.' + parteBitDecimal.reverse().join('')
 
@@ -79,4 +95,57 @@ function bitForDecimal(valor) {
   }
 
   document.getElementById("resultado").innerHTML = resultado;
+
+}
+
+function parteInteiraParaBit(valor) {
+  let numeroAbsoluto = Math.abs(valor);
+
+  let parteInteira = Math.floor(numeroAbsoluto);
+  parteInteira = parteInteira - 1
+  let parteBitInteira = [];
+
+
+  let isdivisible = true;
+
+  if (parteInteira == -1) {
+    parteBitInteira.push(parteInteira)
+    while (parteBitInteira.length < 32) {
+      parteBitInteira.push(0);
+
+    }
+    return parteBitInteira.reverse().join('')
+  }
+
+  do {
+    parteBitInteira.push(parteInteira % 2);
+    parteInteira = Math.trunc(parteInteira / 2);
+
+    if (parteInteira === 0 || parteInteira / 2 === 0.5) {
+      parteBitInteira.push(parteInteira)
+      isdivisible = false
+    }
+
+  } while (isdivisible === true)
+
+  while (parteBitInteira.length < 32) {
+    parteBitInteira.push(0);
+  }
+
+
+
+
+  for (let i = 0; i < parteBitInteira.length; i++) {
+    if (parteBitInteira[i] === 0) {
+      parteBitInteira[i] = 1;
+    } else {
+      parteBitInteira[i] = 0;
+    }
+
+  }
+
+  parteBitInteira[parteBitInteira.length - 1] = 1;
+
+
+  return parteBitInteira.reverse().join('')
 }
