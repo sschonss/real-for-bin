@@ -1,151 +1,77 @@
 
-const converter = () => {
-  let bit = +document.getElementById('real').value;
-  decimalForBit(bit);
+const converterRealParaBit = () => {
+  let real = document.getElementById('real').value;
+  document.getElementById("result-bit").innerHTML = '' + realParaBit(real)
 }
 
-function decimalForBit(valor) {
-  if (valor < 0) {
-    document.getElementById("bit").innerHTML = '' + parteInteiraParaBit(valor) + parteDecimalParaBit(valor)
-  }
-  else {
-    document.getElementById("bit").innerHTML = '' + parteNaturalParaBit(valor) + parteDecimalParaBit(valor)
-  }
-
-
+const converterBitParaReal = () => {
+  let bit = document.getElementById('bit').value;
+  document.getElementById("result-real").innerHTML = '' + bitParaReal(bit)
 }
 
-function parteNaturalParaBit(valor) {
-  let numeroAbsoluto = Math.abs(valor);
-
-  let parteInteira = Math.floor(numeroAbsoluto);
-  let parteBitInteira = [];
-
-
-  let isdivisible = true;
-
-  if (parteInteira == 1 || parteInteira == 0) {
-    parteBitInteira.push(parteInteira)
-    while (parteBitInteira.length < 32) {
-      parteBitInteira.push(0);
-
-    }
-    return parteBitInteira.reverse().join('')
+function realParaBit(num) {
+  if (isNaN(num)) {
+     return "Valor inválido";
   }
-
-
-  do {
-    parteBitInteira.push(parteInteira % 2);
-    parteInteira = Math.trunc(parteInteira / 2);
-    if (parteInteira === 0 || parteInteira / 2 === 0.5) {
-      parteBitInteira.push(parteInteira)
-      isdivisible = false
-    }
-  } while (isdivisible === true)
-
-  while (parteBitInteira.length < 32) {
-    parteBitInteira.push(0);
-
+  if (num == 0) {
+    // Caso especial para o valor 0
+    return "00000000000000000000000000000000";
   }
+  let bits = [];
 
-  return parteBitInteira.reverse().join('')
+  // Determina o sinal do número (0 para positivo, 1 para negativo)
+  let sinal = (num >= 0) ? 0 : 1;
+  num = Math.abs(num);
+  
+  // Calcula o expoente e a parte fracionária do número
+  let expoente = Math.floor(Math.log2(num));
+  let fracao = num / Math.pow(2, expoente) - 1;
+
+  // Converte o expoente para binário usando 8 bits
+  expoente += 127;// Adiciona o valor de bias para o expoente
+  let expoenteBinario = expoente.toString(2).padStart(8, '0');
+  
+  // Converte a parte fracionária para binário usando 23 bits
+  for (let i = 0; i < 23; i++) {
+    fracao *= 2; // Multiplica por 2 para obter o próximo bit
+    bits.push(Math.floor(fracao));
+    fracao -= Math.floor(fracao);
+  }
+// Retorna a representação binária concatenando sinal, expoente e parte fracionária
+   return `${sinal}${expoenteBinario}${bits.join('')}`;
 }
 
-function parteDecimalParaBit(valor) {
-  let numeroAbsoluto = Math.abs(valor);
-
-  let parteInteira = Math.floor(numeroAbsoluto);
-  let parteDecimal = numeroAbsoluto - parteInteira;
-
-  if (parteDecimal === 0) {
-    return ''
-  }
-  let parteBitDecimal = [];
-
-
-  let maxBits = 32;
-
-  while (parteDecimal !== 0 && parteBitDecimal.length < maxBits) {
-    parteDecimal *= 2;
-    if (parteDecimal >= 1) {
-      parteBitDecimal.push(1);
-      parteDecimal -= 1;
-    } else {
-      parteBitDecimal.push(0);
-    }
+function bitParaReal(bit) {
+  if (bit.length !== 32) {
+    return "Valor binário inválido";
   }
 
+  if (bit == "00000000000000000000000000000000") {
+    // Caso especial para o valor 0
+    return 0;
+  }
+  // Extrair o bit de sinal, expoente binário e fração binária da entrada
 
+  const sign = parseInt(bit[0]);
+  const expoenteBinario = bit.substring(1, 9);
+  const fracaoBinario = bit.substring(9);
 
-  return '.' + parteBitDecimal.reverse().join('')
+  // Converter o expoente binário de volta para um número inteiro
+  const expoente = parseInt(expoenteBinario, 2) - 127;
 
+  // Inicializar a fração com o valor 1 (parte inteira)
+  let fracao = 1;
+
+  
+  // Converter a fração binária em um número decimal 
+  for (let i = 0; i < fracaoBinario.length; i++) {
+    fracao += parseInt(fracaoBinario[i]) * Math.pow(2, - (i + 1));
+  }
+  
+  // Calcular o valor final usando a fórmula IEEE 754
+
+  const value = Math.pow(-1, sign) * fracao * Math.pow(2, expoente);
+
+  return value;
 }
-
-
-function bitForDecimal(valor) {
-  let arrayBit = [];
-  for (let i = valor.length; i > 0; i--) {
-    arrayBit.push(valor[i - 1]);
-
-  }
-
-  let resultado = 0;
-  for (let i = 0; i < arrayBit.length; i++) {
-    resultado += arrayBit[i] * Math.pow(2, i)
-  }
-
-  document.getElementById("resultado").innerHTML = resultado;
-
-}
-
-function parteInteiraParaBit(valor) {
-  let numeroAbsoluto = Math.abs(valor);
-
-  let parteInteira = Math.floor(numeroAbsoluto);
-  parteInteira = parteInteira - 1
-  let parteBitInteira = [];
-
-
-  let isdivisible = true;
-
-  if (parteInteira == -1) {
-    parteBitInteira.push(parteInteira)
-    while (parteBitInteira.length < 32) {
-      parteBitInteira.push(0);
-
-    }
-    return parteBitInteira.reverse().join('')
-  }
-
-  do {
-    parteBitInteira.push(parteInteira % 2);
-    parteInteira = Math.trunc(parteInteira / 2);
-
-    if (parteInteira === 0 || parteInteira / 2 === 0.5) {
-      parteBitInteira.push(parteInteira)
-      isdivisible = false
-    }
-
-  } while (isdivisible === true)
-
-  while (parteBitInteira.length < 32) {
-    parteBitInteira.push(0);
-  }
-
-
-
-
-  for (let i = 0; i < parteBitInteira.length; i++) {
-    if (parteBitInteira[i] === 0) {
-      parteBitInteira[i] = 1;
-    } else {
-      parteBitInteira[i] = 0;
-    }
-
-  }
-
-  parteBitInteira[parteBitInteira.length - 1] = 1;
-
-
-  return parteBitInteira.reverse().join('')
-}
+  

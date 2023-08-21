@@ -8,32 +8,53 @@
     <title>Real para decimal</title>
 </head>
 
-<body class="bg-slate-300 h-screen flex flex-col justify-center items-center">
-    <div id="form-conversor" class="bg-white rounded p-20 justify-center">
-        <div class="flex flex-col">
-            <h1 class="font-bold uppercase text-center mb-5">Conversor de REAL para BIT</h1>
-        </div>
-        <div class="flex flex-col content-between items-center">
-            <div class="flex flex-col items-center">
-                <label for="real" class=" mb-2 p-2">REAL:</label>
-                <input type="number" name="real" id="real" class="bg-slate-300 rounded p-2 mb-5 w-5/6">
+<body class="bg-slate-300 h-screen flex flex-row justify-center items-center">
+    <div class="flex flex-row">
+
+        <div id="form-conversor" class="bg-white rounded p-20 justify-center">
+            <div class="flex flex-col">
+                <h1 class="font-bold uppercase text-center mb-5">Conversor de REAL para BIT</h1>
             </div>
-            <div class="flex flex-col items-center ">
-                <label for="bit" class="mb-2 p-2">BIT:</label>
-                <h1 id="bit" name="bit"></h1>
+            <div class="flex flex-col content-between items-center">
+                <div class="flex flex-col items-center">
+                    <label for="real" class=" mb-2 p-2">REAL:</label>
+                    <input type="number" name="real" id="real" class="bg-slate-300 rounded p-2 mb-5 w-6/6">
+                </div>
+                <div class="flex flex-col items-center ">
+                    <label for="result-bit" class="mb-2 p-2">BIT:</label>
+                    <h1 id="result-bit" name="result-bit"></h1>
+                </div>
+            </div>
+            <div class="items-center flex flex-col pt-3">
+                <button id="converter" onclick="converterRealParaBit()"
+                    class=" w-6/12 text-center bg-slate-300  hover:bg-slate-500 rounded hover:text-white">Converter</button>
+                <div id="resultado" class="m-auto pt-5"></div>
             </div>
         </div>
-        <div class="items-center flex flex-col pt-3">
-            <button id="converter" onclick="converter()"
-                class=" w-6/12 text-center bg-slate-300  hover:bg-slate-500 rounded hover:text-white">Converter</button>
-            <div id="resultado" class="m-auto pt-5"></div>
+        <div id="form-conversor" class="bg-white rounded p-20 justify-center">
+            <div class="flex flex-col">
+                <h1 class="font-bold uppercase text-center mb-5">Conversor de BIT para REAL</h1>
+            </div>
+            <div class="flex flex-col content-between items-center">
+                <div class="flex flex-col items-center">
+                    <label for="bit" class=" mb-2 p-2">BIT:</label>
+                    <input type="text" name="bit" id="bit" class="bg-slate-300 rounded p-2 mb-5 w-5/6">
+                </div>
+                <div class="flex flex-col items-center ">
+                    <label for="result-real" class="mb-2 p-2">REAL:</label>
+                    <h1 id="result-real" name="result-real"></h1>
+                </div>
+            </div>
+            <div class="items-center flex flex-col pt-3">
+                <button id="converter" onclick="converterBitParaReal()"
+                    class=" w-6/12 text-center bg-slate-300  hover:bg-slate-500 rounded hover:text-white">Converter</button>
+                <div id="resultado" class="m-auto pt-5"></div>
+            </div>
+
+
+
         </div>
-
-
-
     </div>
-
-
 
     <script src="script.js"></script>
 </body>
