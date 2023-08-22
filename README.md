@@ -25,6 +25,6 @@ A função `bitParaReal(binary)` converte uma representação binária de 32 bit
 
 # ---- Referências ----
 
-https://www.youtube.com/watch?v=ealNNf7lGoU
-https://www.youtube.com/watch?v=KJiJdLcq8a0
+https://www.youtube.com/watch?v=ealNNf7lGoU  
+https://www.youtube.com/watch?v=KJiJdLcq8a0  
 https://www.youtube.com/watch?v=HmjG79TKbZQ
