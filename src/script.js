@@ -11,18 +11,26 @@ const converterBitParaReal = () => {
   document.getElementById("result-real").innerHTML += bitParaReal(bit)
 }
 const verMais = () => {
-  if(document.getElementById('sobre').classList.contains("hidden")){
+  if (document.getElementById('sobre').classList.contains("hidden")) {
 
     document.getElementById('sobre').classList.remove("hidden")
     document.getElementById('ler-mais').textContent = "ler menos"
 
-  }else{
+  } else {
     document.getElementById('sobre').classList.add("hidden")
     document.getElementById('ler-mais').textContent = "ler mais"
   }
 
-  
+
 }
+
+const clearInput = () => {
+  if (document.getElementById('real').value == '') {
+    document.getElementById('result-bit').innerHTML = ''
+  }
+}
+
+
 function realParaBit(num) {
   if (isNaN(num)) {
     return "Valor inválido";
@@ -86,10 +94,6 @@ function bitParaReal(bit) {
     </div>`
   }
 
-  if (bit == "00000000000000000000000000000000" || bit == "10000000000000000000000000000000") {
-    // Caso especial para o valor 0
-    return 0;
-  }
   // Extrair o bit de sinal, expoente binário e fração binária da entrada
 
   const sign = parseInt(bit[0]);
