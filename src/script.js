@@ -11,8 +11,17 @@ const converterBitParaReal = () => {
   document.getElementById("result-real").innerHTML += bitParaReal(bit)
 }
 const verMais = () => {
-  document.getElementById('sobre').classList.remove("hidden")
-  document.getElementById('ler-mais').textContent = "ler menos"
+  if(document.getElementById('sobre').classList.contains("hidden")){
+
+    document.getElementById('sobre').classList.remove("hidden")
+    document.getElementById('ler-mais').textContent = "ler menos"
+
+  }else{
+    document.getElementById('sobre').classList.add("hidden")
+    document.getElementById('ler-mais').textContent = "ler mais"
+  }
+
+  
 }
 function realParaBit(num) {
   if (isNaN(num)) {
@@ -127,7 +136,7 @@ function formatacao(sinal, expoenteBinario, bits) {
   <strong>Expoente Binário:</strong> ${expoenteBinario}
   </h1>
   <h1 class=" text-blue-500">
-  <strong>Fraçao binária:</strong> ${bits.join('')}
+  <strong>Mantissa:</strong> ${bits.join('')}
   </h1>
 </div>
 `
